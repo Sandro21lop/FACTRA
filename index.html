@@ -196,11 +196,11 @@ nav{
 .galeria-section{background:var(--claro);padding:5rem 0;border-top:1px solid var(--borde)}
 .galeria-inner{max-width:1120px;margin:0 auto;padding:0 1.5rem}
 
-.carousel-wrap{position:relative;margin-top:2.5rem;max-width:860px;margin-left:auto;margin-right:auto}
-.carousel-track-outer{overflow:hidden;border-radius:14px;box-shadow:var(--shadow-xl);max-height:520px}
+.carousel-wrap{position:relative;margin-top:2.5rem;max-width:860px;margin-left:auto;margin-right:auto;padding:0 24px}
+.carousel-track-outer{overflow:hidden;border-radius:14px;box-shadow:var(--shadow-xl)}
 .carousel-track{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1);will-change:transform}
-.carousel-slide{min-width:100%;position:relative;aspect-ratio:16/10;background:#0a1e38;cursor:pointer;flex-shrink:0;max-height:520px}
-.carousel-slide img{width:100%;height:100%;object-fit:contain;display:block;border-radius:14px;background:#0d1f3c}
+.carousel-slide{min-width:100%;position:relative;background:#0a1e38;cursor:pointer;flex-shrink:0}
+.carousel-slide img{width:100%;height:auto;max-height:520px;object-fit:contain;display:block;border-radius:14px;background:#0d1f3c}
 .carousel-slide::after{
   content:'🔍 clic para ampliar';
   position:absolute;bottom:12px;right:14px;
@@ -230,8 +230,8 @@ nav{
 }
 .carousel-btn:hover{background:#fff;transform:translateY(-50%) scale(1.08);box-shadow:0 8px 28px rgba(10,46,92,.28)}
 .carousel-btn svg{width:18px;height:18px;stroke:currentColor;stroke-width:2.5;fill:none}
-.carousel-btn.prev{left:-20px}
-.carousel-btn.next{right:-20px}
+.carousel-btn.prev{left:0px}
+.carousel-btn.next{right:0px}
 .carousel-dots{display:flex;justify-content:center;gap:.55rem;margin-top:1.5rem}
 .cdot{width:8px;height:8px;border-radius:50%;background:var(--borde2);border:none;cursor:pointer;padding:0;transition:background .25s,transform .25s,width .25s}
 .cdot.active{background:var(--azul3);width:24px;border-radius:4px}
@@ -520,14 +520,17 @@ footer a:hover{color:var(--acento)}
   .section{padding:4rem 1.25rem}
   .tickets-section,.testi-section,.sri-section{padding:3.5rem 0}
   .tickets-inner,.testi-inner,.negocios-inner,.galeria-inner{padding:0 1.25rem}
+  .carousel-wrap{padding:0 20px}
   .stats-inner{grid-template-columns:1fr 1fr;gap:.75rem;padding:1.5rem 1.25rem}
   .stat-n{font-size:2rem}
   .cta-section{padding:4rem 1.25rem}
   .cta-section .section-title{font-size:1.85rem}
   .cta-section p{font-size:.95rem}
-  .carousel-btn.prev{left:-12px}
-  .carousel-btn.next{right:-12px}
+  .carousel-btn.prev{left:0}
+  .carousel-btn.next{right:0}
   .carousel-btn{width:36px;height:36px}
+  .carousel-slide img{max-height:320px}
+  .carousel-thumbs{display:none}
   .nav-inner{height:58px}
 }
 @media(max-width:400px){
@@ -1039,21 +1042,28 @@ async function cargarRelease() {
     const exeName = gh.exeName || 'Factra-Ecuador-Setup.exe';
     const asset = data.assets.find(a => a.name === exeName) || data.assets.find(a => a.name.endsWith('.exe'));
     if (asset) {
+      // Descarga directa — NO redirige a WhatsApp
       btn.href = asset.browser_download_url;
       btn.setAttribute('download', asset.name);
       btn.target = '_blank';
+      btn.rel = 'noopener';
       btn.classList.remove('loading');
       mainTxt.textContent = dl.btnText || '⬇ Descargar Factra Ecuador';
       const mb = (asset.size / 1024 / 1024).toFixed(1);
       subTxt.textContent = `${dl.btnSub || 'Windows 10/11 · 64-bit'} · ${mb} MB`;
       versionEl.textContent = data.tag_name;
+      // Quitar cualquier listener previo que pudiera redirigir a WA
+      btn.onclick = null;
     } else throw new Error('Sin .exe');
   } catch(e) {
+    // Solo si no hay release disponible, va a WhatsApp
     btn.classList.remove('loading');
     mainTxt.textContent = dl.btnText || 'Descargar gratis para Windows';
     subTxt.textContent = dl.btnSub || 'Windows 10/11 · 64-bit';
     versionEl.textContent = 'contáctanos por WhatsApp';
     btn.href = waUrl('prueba');
+    btn.removeAttribute('download');
+    btn.target = '_blank';
   }
 }
 
