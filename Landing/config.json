@@ -1,0 +1,26 @@
+{
+  "github": {
+    "user": "",
+    "repo": "",
+    "exeName": "Factra-Ecuador-Setup.exe"
+  },
+  "download": {
+    "btnText": "Descargar gratis para Windows",
+    "btnSub": "Windows 10/11 · 64-bit · Gratis"
+  },
+  "logo": {
+    "url": "",
+    "altText": "Factra Ecuador"
+  },
+  "textos": {
+    "waNumber": "593XXXXXXXXX",
+    "heroTitulo1": "Tu negocio,",
+    "heroTitulo2": "sin papel, sin complicaciones.",
+    "heroSub": "Sistema de punto de venta con facturación electrónica. Se instala en tu computador Windows, funciona sin internet y tus datos siempre son tuyos.",
+    "empresaNombre": "Factra Ecuador",
+    "empresaTagline": "Sistema POS con Facturación Electrónica"
+  },
+  "imagenes": [
+    { "url": "assets/screenshots/01.png", "caption": "Caja principal — Punto de venta rápido" }
+  ]
+}
