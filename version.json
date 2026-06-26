@@ -1,0 +1,6 @@
+{
+  "version": "1.0.3",
+  "url": "https://github.com/Sandro21lop/FACTRA/releases/download/v1.0.3/Factra_Setup_v1.0.3.exe",
+  "notas": "- Escaneo continuo sin perder foco\n- Botón generar código de barras único\n- Soporte Windows 10 LTSC 2018",
+  "obligatoria": false
+}
